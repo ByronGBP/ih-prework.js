@@ -3,13 +3,6 @@ var myRover2 = {
   direction: 'N',
   report: "",
 
-  grid: [[".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],["X",".",".",".",".",".",".",".",".","."]],
-
-
   goForward: function() {
 
     switch(this.direction) {
@@ -185,21 +178,27 @@ var myRover2 = {
     switch(toDirection) {
       case 'N':
         if (this.isOnTheEdge('N')) {positionX = 10;}
-        if (this.grid[--positionX][positionY] === "X") {return false; }
+        if (grid[--positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
       case 'E':
         if (this.isOnTheEdge('E')) {positionY = -1;}
-        if (this.grid[positionX][++positionY] === "X") {return false; }
+        if (grid[positionX][++positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
       case 'S':
         if (this.isOnTheEdge('S')) {positionX = -1;}
-        if (this.grid[++positionX][positionY] === "X") {return false; }
+        if (grid[++positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
       case 'W':
         if (this.isOnTheEdge('W')) {positionY = 10;}
-        if (this.grid[positionX][--positionY] === "X") {return false; }
+        if (grid[positionX][--positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
     }
+  },
+
+  bumpWithAnotherRover: function(posX, posY) {
+
+    if (posX === myRover.position[0] && posY === myRover.position[1]) { return true; }
+    return false;
 
   },
 
@@ -216,8 +215,6 @@ var myRover2 = {
         console.log("New Rover Position: [" + this.position[0] + ", " + this.position[1] + "]");
         break;
     }
-
-
   }
 
 };

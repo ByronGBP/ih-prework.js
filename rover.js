@@ -7,14 +7,9 @@
 
 var myRover = {
   position: [0,0],
+  oldPosition: {},
   direction: 'N',
   report: "",
-
-  grid: [[".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".",".",".","."],
-  [".",".",".",".",".",".",".",".",".","."],["X",".",".",".",".",".",".",".",".","."]],
 
 
   goForward: function() {
@@ -103,6 +98,7 @@ var myRover = {
 
     if (this.canMove("N")) {
 
+      this.saveOldPosition();
       if (this.isOnTheEdge("N")) {this.position[0] = 9;}
       else{ this.position[0]--; }
       this.report = "moved";
@@ -115,10 +111,17 @@ var myRover = {
     }
   },
 
+  saveOldPosition: function() {
+
+    this.oldPosition.x = this.position[0];
+    this.oldPosition.y = this.position[1];
+
+  },
+
   goEst: function() {
 
     if (this.canMove("E")) {
-
+      this.saveOldPosition();
       if (this.isOnTheEdge("E")) {this.position[1] = 0;}
       else { this.position[1]++; }
       this.report = "moved";
@@ -135,7 +138,7 @@ var myRover = {
   goSouth: function() {
 
     if (this.canMove("S")) {
-
+      this.saveOldPosition();
       if (this.isOnTheEdge("S")) { this.position[0] = 0; }
       else{ this.position[0]++; }
       this.report = "moved";
@@ -153,7 +156,7 @@ var myRover = {
   goWest: function() {
 
     if (canMove("W")) {
-
+      this.saveOldPosition();
       if(this.isOnTheEdge("W")) { this.position[1] = 9;}
       else {this.position[1]--;}
       this.report = "moved";
@@ -192,19 +195,19 @@ var myRover = {
     switch(toDirection) {
       case 'N':
         if (this.isOnTheEdge('N')) {positionX = 10;}
-        if (this.grid[--positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (grid[--positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
       case 'E':
         if (this.isOnTheEdge('E')) {positionY = -1;}
-        if (this.grid[positionX][++positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (grid[positionX][++positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
       case 'S':
         if (this.isOnTheEdge('S')) {positionX = -1;}
-        if (this.grid[++positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (grid[++positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
       case 'W':
         if (this.isOnTheEdge('W')) {positionY = 10;}
-        if (this.grid[positionX][--positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (grid[positionX][--positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
         return true;
     }
   },
