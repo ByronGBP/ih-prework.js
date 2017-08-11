@@ -95,6 +95,8 @@ function updateGrid() {
 
 function setupRovers() {
 
+
+
   movementsRover1 = "fffrfflfffbb";
   movementsRover2 = "ffblfbfflfbf";
 
@@ -106,6 +108,7 @@ function setupRovers() {
   myRover2.oldPosition.x = myRover2.position[0];
   myRover2.oldPosition.y = myRover2.position[1];
 
+  console.log("----------Initial Position----------");
   updateGrid();
 
 }
