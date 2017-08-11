@@ -1,12 +1,5 @@
-//    N
-//    |
-// W - - E
-//    |
-//    S
-
-
-var myRover = {
-  position: [0,0],
+var myRover2 = {
+  position: [0,2],
   direction: 'N',
   report: "",
 
@@ -192,27 +185,21 @@ var myRover = {
     switch(toDirection) {
       case 'N':
         if (this.isOnTheEdge('N')) {positionX = 10;}
-        if (this.grid[--positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (this.grid[--positionX][positionY] === "X") {return false; }
         return true;
       case 'E':
         if (this.isOnTheEdge('E')) {positionY = -1;}
-        if (this.grid[positionX][++positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (this.grid[positionX][++positionY] === "X") {return false; }
         return true;
       case 'S':
         if (this.isOnTheEdge('S')) {positionX = -1;}
-        if (this.grid[++positionX][positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (this.grid[++positionX][positionY] === "X") {return false; }
         return true;
       case 'W':
         if (this.isOnTheEdge('W')) {positionY = 10;}
-        if (this.grid[positionX][--positionY] === "X" || this.bumpWithAnotherRover(positionX, positionY)) {return false; }
+        if (this.grid[positionX][--positionY] === "X") {return false; }
         return true;
     }
-  },
-
-  bumpWithAnotherRover: function(posX, posY) {
-
-    if (posX === myRover2.position[0] && posY === myRover2.position[1]) { return true; }
-    return false;
 
   },
 
