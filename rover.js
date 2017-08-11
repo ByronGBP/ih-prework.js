@@ -155,7 +155,7 @@ var myRover = {
 
   goWest: function() {
 
-    if (canMove("W")) {
+    if (this.canMove("W")) {
       this.saveOldPosition();
       if(this.isOnTheEdge("W")) { this.position[1] = 9;}
       else {this.position[1]--;}
@@ -223,13 +223,13 @@ var myRover = {
 
     switch(this.report) {
       case "directioned":
-        console.log("New Rover Direction to: "+ this.direction + "; at Position: [" + this.position[0] + ", " + this.position[1] + "]");
+        console.log("New Rover1 Direction to: "+ this.direction + "; at Position: [" + this.position[0] + ", " + this.position[1] + "]");
         break;
       case "blocked":
-        console.log("Rover Blocked at Position: [" + this.position[0] + ", " + this.position[1] + "]; with Direction: " + this.direction);
+        console.log("Rover1 Blocked at Position: [" + this.position[0] + ", " + this.position[1] + "]; with Direction: " + this.direction);
         break;
       case "moved":
-        console.log("New Rover Position: [" + this.position[0] + ", " + this.position[1] + "]");
+        console.log("New Rover1 Position: [" + this.position[0] + ", " + this.position[1] + "]");
         break;
     }
 

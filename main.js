@@ -1,51 +1,42 @@
 
+//TODO: Debugar: Rover 2 [8,0] Direction: E, con los movimientos actuales.
+//TODO: Automatizar el setup con valores randoms tanto para el grid, y los valores de los Rovers.
+//TODO: Crear un boton para poder realizar los setups.
+//TODO: CleanCode de los objetos Rover.
 
 var grid = [[".",".",".",".",".",".",".",".",".","."],
 [".",".",".",".",".",".",".",".",".","."],
+[".",".",".",".",".",".",".","X",".","."],
 [".",".",".",".",".",".",".",".",".","."],
 [".",".",".",".",".",".",".",".",".","."],
-[".",".",".",".",".",".",".",".",".","."],
-[".",".",".",".",".",".",".",".",".","."],
-[".",".",".",".",".",".",".",".",".","."],
-[".",".",".",".",".",".",".",".",".","."],
-[".",".",".",".",".",".",".",".",".","."],
+[".",".",".",".",".","X",".",".",".","."],
+[".",".",".",".",".",".",".",".","X","."],
+[".","X",".",".",".",".",".",".",".","."],
+[".",".",".",".",".",".","X",".",".","."],
 ["X",".",".",".",".",".",".",".",".","."]];
 
 var gridDisplay = "";
-var oldPositionRover2 = {};
+var movementsRover1 = "";
+var movementsRover2 = "";
 
-
-function goRover() {
-
-  var movements = "fffrfflfffbb";
-  setupRovers();
-
-  for (var i = 0; i < movements.length ; i++) {
-
-    doMovement(movements[i]);
-    updateGrid();
-
-  }
-}
-
-function doMovement(movement) {
+function doMovement(movement, rover) {
 
   switch(movement) {
     case 'f':
-      myRover.goForward();
+      rover.goForward();
       break;
     case 'b':
-      myRover.goBackward();
+      rover.goBackward();
       break;
     case 'r':
-      myRover.turnRigth();
+      rover.turnRigth();
       break;
     case 'l':
-      myRover.turnLeft();
+      rover.turnLeft();
       break;
   }
 
-  myRover.showReport();
+  rover.showReport();
 
 }
 
@@ -72,9 +63,11 @@ function drawCoordinates(i) {
   }
   if (i === 3 || i === 5) {
     gridDisplay += "        |"; //8 espacios
+    if (i === 3) { gridDisplay += "      R: Rover 1"; }
+    else { gridDisplay += "      X: Obstacle"; }
   }
   if (i === 4) {
-    gridDisplay += "     W - - E"; //5 espacios
+    gridDisplay += "     W - - E   T: Rover 2"; //5 espacios
   }
   if (i === 6) {
     gridDisplay += "        S"; //8 espacios
@@ -87,18 +80,14 @@ function updateGrid() {
   var posX = myRover.oldPosition.x;
   var posY = myRover.oldPosition.y;
 
-
   grid[posX][posY] = ".";
   grid[myRover.position[0]][myRover.position[1]] = 'R';
 
-  posX = oldPositionRover2[0];
-  posY = oldPositionRover2[1];
+  posX = myRover2.oldPosition.x;
+  posY = myRover2.oldPosition.y;
 
   grid[posX][posY] = '.';
-
-  oldPositionRover2 = myRover2.position;
   grid[myRover2.position[0]][myRover2.position[1]] = 'T';
-
 
   displayGrid();
 
@@ -106,15 +95,33 @@ function updateGrid() {
 
 function setupRovers() {
 
+  movementsRover1 = "fffrfflfffbb";
+  movementsRover2 = "ffblfbfflfbf";
+
   myRover.position = [0,1];
-  myRover.oldPosition.x = 0;
-  myRover.oldPosition.y = 1;
+  myRover.oldPosition.x = myRover.position[0];
+  myRover.oldPosition.y = myRover.position[1];
 
   myRover2.position = [1,2];
-  oldPositionRover2 = myRover2.position;
+  myRover2.oldPosition.x = myRover2.position[0];
+  myRover2.oldPosition.y = myRover2.position[1];
 
   updateGrid();
 
+}
+
+function goRover() {
+  //PRE:- Same numbers of movement for each Rover.
+
+  setupRovers();
+
+  for (var i = 0; i < movementsRover1.length ; i++) {
+
+    doMovement(movementsRover1[i], myRover);
+    doMovement(movementsRover2[i], myRover2);
+    updateGrid();
+
+  }
 }
 
 goRover();

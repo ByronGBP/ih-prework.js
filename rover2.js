@@ -2,6 +2,7 @@ var myRover2 = {
   position: [0,2],
   direction: 'N',
   report: "",
+  oldPosition: {},
 
   goForward: function() {
 
@@ -89,6 +90,7 @@ var myRover2 = {
 
     if (this.canMove("N")) {
 
+      this.saveOldPosition();
       if (this.isOnTheEdge("N")) {this.position[0] = 9;}
       else{ this.position[0]--; }
       this.report = "moved";
@@ -101,10 +103,17 @@ var myRover2 = {
     }
   },
 
+  saveOldPosition: function() {
+
+    this.oldPosition.x = this.position[0];
+    this.oldPosition.y = this.position[1];
+
+  },
+
   goEst: function() {
 
     if (this.canMove("E")) {
-
+      this.saveOldPosition();
       if (this.isOnTheEdge("E")) {this.position[1] = 0;}
       else { this.position[1]++; }
       this.report = "moved";
@@ -121,7 +130,7 @@ var myRover2 = {
   goSouth: function() {
 
     if (this.canMove("S")) {
-
+      this.saveOldPosition();
       if (this.isOnTheEdge("S")) { this.position[0] = 0; }
       else{ this.position[0]++; }
       this.report = "moved";
@@ -138,8 +147,8 @@ var myRover2 = {
 
   goWest: function() {
 
-    if (canMove("W")) {
-
+    if (this.canMove("W")) {
+      this.saveOldPosition();
       if(this.isOnTheEdge("W")) { this.position[1] = 9;}
       else {this.position[1]--;}
       this.report = "moved";
@@ -206,13 +215,13 @@ var myRover2 = {
 
     switch(this.report) {
       case "directioned":
-        console.log("New Rover Direction to: "+ this.direction + "; at Position: [" + this.position[0] + ", " + this.position[1] + "]");
+        console.log("New Rover2 Direction to: "+ this.direction + "; at Position: [" + this.position[0] + ", " + this.position[1] + "]");
         break;
       case "blocked":
-        console.log("Rover Blocked at Position: [" + this.position[0] + ", " + this.position[1] + "]; with Direction: " + this.direction);
+        console.log("Rover2 Blocked at Position: [" + this.position[0] + ", " + this.position[1] + "]; with Direction: " + this.direction);
         break;
       case "moved":
-        console.log("New Rover Position: [" + this.position[0] + ", " + this.position[1] + "]");
+        console.log("New Rover2 Position: [" + this.position[0] + ", " + this.position[1] + "]");
         break;
     }
   }
